@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 class GameFrame extends Frame {
 
@@ -12,7 +14,25 @@ class GameFrame extends Frame {
         panel = new GamePanel();
         add(panel, BorderLayout.CENTER);
 
-
         setVisible(true);
+
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+
+        });
+
     }
- }
+}
