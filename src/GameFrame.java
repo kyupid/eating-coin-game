@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 class GameFrame extends JFrame implements KeyListener, Runnable {
 
@@ -10,7 +11,9 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     private final int FRAME_WIDTH = 600;
     private final int FRAME_HEIGHT = 600;
 
-    private int xPlayer, yPlayer;
+    private int xPlayer, yPlayer, xCoin, yCoin;
+
+    private int score = 0;
 
     private int count = 0;
 
@@ -22,6 +25,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     Graphics gp;
 
     Thread t;
+
+    Random rd;
 
 
     GameFrame() {
@@ -37,7 +42,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     public void run() {
     while(true) {
         try{
-            move(); // isKey가 true인지 계속 확인
+            movePlayer(); // isKey가 true인지 계속 확인
             repaint(); //계속 다시그려준다
             count++;
 
@@ -55,6 +60,14 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         //xPlayer, yPlayer를 프레임의 가운데에 배치하는 값을 저장한다.
         xPlayer = (FRAME_WIDTH - imagePlayer.getWidth(this)) / 2;
         yPlayer = (FRAME_HEIGHT - imagePlayer.getHeight(this)) / 2;
+
+        //xCoin, yCoin 설정
+        rd = new Random();
+        xCoin = rd.nextInt(FRAME_WIDTH);
+        yCoin = rd.nextInt(FRAME_HEIGHT);
+        while(yCoin < 30) { //창의 좌표까지 고려해서
+            yCoin = rd.nextInt(FRAME_HEIGHT);
+        }
     }
 
 
@@ -69,10 +82,12 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         gp.drawImage(imagePlayer, xPlayer, yPlayer, this);
         gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
 
+        gp.drawImage(imageCoin, xCoin, yCoin, this);
+
         update(g);
     }
 
-    private void move() {
+    private void movePlayer() {
         if (isKeyUp) {
             yPlayer -= 5;
         }
@@ -89,6 +104,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             xPlayer += 5;
         }
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
