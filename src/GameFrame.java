@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class GameFrame extends JFrame implements KeyListener {
+class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private boolean isKeyUp, isKeyDown, isKeyLeft, isKeyRight = false;
     private boolean playerMove = false;
@@ -18,13 +18,29 @@ class GameFrame extends JFrame implements KeyListener {
     Image bufferImage;
     Graphics gp;
 
+    Thread t;
+
+
     GameFrame() {
         init();
-
         addKeyListener(this);
 
-        setVisible(true);
+        t = new Thread(this);
+        t.start();
 
+        setVisible(true);
+    }
+
+    public void run() {
+    while(true) {
+        try{
+            move(); // isKey가 true인지 계속 확인
+            repaint(); //계속 다시그려준다
+
+            Thread.sleep(20);
+
+        } catch (Exception e) {}
+    }
     }
 
     private void init() {
@@ -48,6 +64,21 @@ class GameFrame extends JFrame implements KeyListener {
     }
 
     private void move() {
+        if (isKeyUp) {
+            yPlayer -= 5;
+        }
+
+        if (isKeyDown) {
+            yPlayer += 5;
+        }
+
+        if (isKeyLeft) {
+            xPlayer -= 5;
+        }
+
+        if (isKeyRight) {
+            xPlayer += 5;
+        }
     }
 
     @Override
@@ -93,8 +124,9 @@ class GameFrame extends JFrame implements KeyListener {
                 break;
         }
     }
+
     @Override
-    public void keyTyped (KeyEvent e){
+    public void keyTyped(KeyEvent e) {
     }
 }
 
