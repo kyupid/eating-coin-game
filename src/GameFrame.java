@@ -18,9 +18,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     private int count = 0;
 
 
-    Toolkit tk = Toolkit.getDefaultToolkit();
-    Image imagePlayer = tk.getImage("0.png");
-    Image imageCoin = tk.getImage("1.png");
+    Image imagePlayer = new ImageIcon("0.png").getImage();
+    Image imageCoin = new ImageIcon("1.png").getImage();
 
     int widthPlayer = imagePlayer.getWidth(this);
     int heightPlayer = imagePlayer.getHeight(this);
