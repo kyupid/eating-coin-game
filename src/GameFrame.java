@@ -12,8 +12,11 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private int xPlayer, yPlayer;
 
+    private int count = 0;
+
     Toolkit tk = Toolkit.getDefaultToolkit();
     Image imagePlayer = tk.getImage("0.png");
+    Image imageCoin = tk.getImage("1.png");
 
     Image bufferImage;
     Graphics gp;
@@ -36,6 +39,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         try{
             move(); // isKey가 true인지 계속 확인
             repaint(); //계속 다시그려준다
+            count++;
+
 
             Thread.sleep(20);
 
@@ -58,10 +63,11 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     }
 
     public void paint(Graphics g) {
-        //가상에 그려준다
+        //가상(back buffer)에 그려준다
         bufferImage = createImage(FRAME_WIDTH, FRAME_HEIGHT);
         gp = bufferImage.getGraphics();
         gp.drawImage(imagePlayer, xPlayer, yPlayer, this);
+        gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
 
         update(g);
     }
