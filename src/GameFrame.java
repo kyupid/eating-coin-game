@@ -17,19 +17,26 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private int count = 0;
 
+
     Toolkit tk = Toolkit.getDefaultToolkit();
     Image imagePlayer = tk.getImage("0.png");
     Image imageCoin = tk.getImage("1.png");
+
+    int widthPlayer = imagePlayer.getWidth(this);
+    int heightPlayer = imagePlayer.getHeight(this);
+    int widthCoin = imageCoin.getWidth(this);
+    int heightCoin = imageCoin.getHeight(this);
 
     Image bufferImage;
     Graphics gp;
 
     Thread t;
 
-    Random rd;
+    Random rd = new Random();
 
 
     GameFrame() {
+
         init();
         addKeyListener(this);
 
@@ -40,33 +47,38 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     }
 
     public void run() {
-    while(true) {
-        try{
-            movePlayer(); // isKey가 true인지 계속 확인
-            repaint(); //계속 다시그려준다
-            count++;
+        while (true) {
+            try {
+                movePlayer(); // isKey가 true인지 계속 확인
+                crashPlayerNCoin();
+                repaint(); //계속 다시그려준다
+                count++;
 
 
-            Thread.sleep(20);
+                Thread.sleep(20);
 
-        } catch (Exception e) {}
-    }
+            } catch (Exception e) {
+            }
+        }
     }
 
     private void init() {
         setTitle("Eat Coin");
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
+
+
         //xPlayer, yPlayer를 프레임의 가운데에 배치하는 값을 저장한다.
-        xPlayer = (FRAME_WIDTH - imagePlayer.getWidth(this)) / 2;
-        yPlayer = (FRAME_HEIGHT - imagePlayer.getHeight(this)) / 2;
+        xPlayer = (FRAME_WIDTH - widthPlayer) / 2;
+        yPlayer = (FRAME_HEIGHT - heightPlayer) / 2;
 
         //xCoin, yCoin 설정
-        rd = new Random();
         xCoin = rd.nextInt(FRAME_WIDTH);
         yCoin = rd.nextInt(FRAME_HEIGHT);
-        while(yCoin < 30) { //창의 좌표까지 고려해서
+        while (yCoin < 30) { //창의 좌표까지 고려해서
             yCoin = rd.nextInt(FRAME_HEIGHT);
+
+
         }
     }
 
@@ -80,9 +92,11 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         bufferImage = createImage(FRAME_WIDTH, FRAME_HEIGHT);
         gp = bufferImage.getGraphics();
         gp.drawImage(imagePlayer, xPlayer, yPlayer, this);
-        gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
-
         gp.drawImage(imageCoin, xCoin, yCoin, this);
+
+        gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
+        gp.drawString(("SCORE: " + Integer.toString(score)), 300, 50);
+
 
         update(g);
     }
@@ -102,6 +116,21 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
         if (isKeyRight) {
             xPlayer += 5;
+        }
+    }
+
+    public void crashPlayerNCoin() {
+
+        if (xPlayer + widthPlayer > xCoin && yPlayer + heightPlayer > yCoin && xCoin + widthCoin > xPlayer && yCoin + heightCoin > yPlayer) {
+
+            score++;
+
+            //xCoin, yCoin 설정
+            xCoin = rd.nextInt(FRAME_WIDTH);
+            yCoin = rd.nextInt(FRAME_HEIGHT);
+            while (yCoin < 30) { //창의 좌표까지 고려해서
+                yCoin = rd.nextInt(FRAME_HEIGHT);
+            }
         }
     }
 
