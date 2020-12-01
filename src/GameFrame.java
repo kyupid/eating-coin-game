@@ -1,43 +1,23 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class GameFrame extends Frame {
+class GameFrame extends JFrame {
 
-    GamePanel panel;
+    private final int FRAME_WIDTH = 600;
+    private final int FRAME_HEIGHT = 600;
 
     GameFrame() {
         setTitle("Eat Coin");
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                System.exit(0);
-            }
-        });
-
-        panel = new GamePanel();
-        add(panel, BorderLayout.CENTER);
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
         setVisible(true);
 
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
+    }
 
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-
-        });
+    public void init () {
 
     }
+
 }
+

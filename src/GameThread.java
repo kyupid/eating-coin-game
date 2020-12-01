@@ -1,2 +1,0 @@
-class GameThread extends Thread{
-}
