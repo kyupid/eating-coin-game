@@ -26,4 +26,4 @@
 1. Study mainly on concepts that seem necessary or how to use classes.
 2. Implement it yourself without just finding and following the code.
 3. Set a deadline from November 30th to December 4th (Friday).
-4. ** (Important) ** Finish with the functioning code! (Finish, go alone)
+4. ** (Important) ** Finish with the functioning code! (feel a sence of achievement)
