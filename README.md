@@ -14,7 +14,7 @@
 
 ---
 
-#English ver.
+# English ver.
 # Coin eating game
 ## game goal
 1. Players moving up, down, left, right, diagonally
