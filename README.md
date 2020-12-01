@@ -16,7 +16,7 @@
 
 # English ver.
 # Coin eating game
-## game goal
+## Game goals
 1. Players moving up, down, left, right, diagonally
 2. Generate coins randomly on the map
 3. Eating coins increases your score
