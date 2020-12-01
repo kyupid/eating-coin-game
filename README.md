@@ -1,4 +1,3 @@
-# Korean ver.
 # 코인 먹기 게임
 ## 게임 목표
 1. 상, 하, 좌, 우, 대각선으로 움직이는 플레이어
@@ -14,7 +13,6 @@
 
 ---
 
-# English ver.
 # Coin eating game
 ## Game goals
 1. Players moving up, down, left, right, diagonally
