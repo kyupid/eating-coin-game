@@ -7,12 +7,11 @@ import java.util.Random;
 class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private boolean isKeyUp, isKeyDown, isKeyLeft, isKeyRight = false;
-    private boolean playerMove = false;
 
     private final int FRAME_WIDTH = 600;
     private final int FRAME_HEIGHT = 600;
 
-    private int xPlayer, yPlayer, xCoin, yCoin, xBall, yBall;
+    private int xPlayer, yPlayer, xCoin, yCoin;
 
     private int score = 0;
 
@@ -61,18 +60,15 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         new BallGenerator().start();
         while (true) {
             try {
-                takeBallsOutFromArray();
-                movePlayer(); // isKey가 true인지 계속 확인
-                checkPlayerNWallBumped();
-                checkPlayerNCoinBumped();
-                repaint(); //계속 다시그려준다
-                count++;
-
-
                 Thread.sleep(20);
-
             } catch (Exception e) {
             }
+            takeBallsOutFromArray();
+            movePlayer(); // isKey가 true인지 계속 확인
+            checkPlayerNWallBumped();
+            checkPlayerNCoinBumped();
+            repaint(); //계속 다시그려준다
+            count++;
         }
     }
 
@@ -101,10 +97,6 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         gp.drawImage(imagePlayer, xPlayer, yPlayer, this);
         gp.drawImage(imageCoin, xCoin, yCoin, this);
 
-        gp.setColor(Color.RED);
-        gp.fillOval(xBall, yBall, Ball.SIZE, Ball.SIZE);
-        gp.setColor(Color.BLACK); //컬러를 어떻게 초기화하는 방법을 몰라서 다시 검정색으로 칠함
-
         gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
         gp.drawString(("SCORE: " + Integer.toString(score)), 300, 50);
 
@@ -119,6 +111,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
         update(g);
     }
+
+
 
     class BallGenerator extends Thread { //공 생성해주는 쓰레드를 만들어준다 무한반복할거니까
         public void run() {
@@ -142,6 +136,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         int size = balls.size();
         for (int i = 0; i < size; i++) { //생성된 ball들을 for문에 넣고 조건을 줘서 움직여준다
             Ball b = (Ball) balls.get(i); // ball들의 x와 y의 값을 가져오는거긴한데 이 코드는 이해를 못하겠음
+
             b.x += b.xStep;
             b.y += b.yStep;
 
