@@ -6,6 +6,7 @@ import java.util.Random;
 
 class GameFrame extends JFrame implements KeyListener, Runnable {
 
+    private boolean isRunning = true;
     private boolean isKeyUp, isKeyDown, isKeyLeft, isKeyRight = false;
 
     private final int FRAME_WIDTH = 600;
@@ -58,7 +59,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     public void run() {
         new BallGenerator().start();
-        while (true) {
+        while (isRunning) {
             try {
                 Thread.sleep(20);
             } catch (Exception e) {
@@ -242,8 +243,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             int xCircleCenter = b.x + lengthNowToCenTer;
             int yCircleCenter = b.y + lengthNowToCenTer;
 
-            if (yPlayer >= yCircleCenter - b.SIZE/2 && yPlayer <= yCircleCenter + b.SIZE && xPlayer >= xCircleCenter - b.SIZE && xPlayer <= xCircleCenter + b.SIZE) {
-                System.exit(0);
+            if (yPlayer >= yCircleCenter - b.SIZE / 2 && yPlayer <= yCircleCenter + b.SIZE && xPlayer >= xCircleCenter - b.SIZE && xPlayer <= xCircleCenter + b.SIZE) {
+               isRunning = false;
             }
 
             //1. 방법1 Oval의 길이의 좌표를 구해야함
@@ -254,6 +255,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             //5. 닿으면 안되는 곳을 플레이어와 겹치면 일단 시스템 종료하는걸로.
         }
     }
+
 
 
     @Override
