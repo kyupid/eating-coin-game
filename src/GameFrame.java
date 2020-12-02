@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 class GameFrame extends JFrame implements KeyListener, Runnable {
@@ -11,7 +12,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     private final int FRAME_WIDTH = 600;
     private final int FRAME_HEIGHT = 600;
 
-    private int xPlayer, yPlayer, xCoin, yCoin;
+    private int xPlayer, yPlayer, xCoin, yCoin, xBall, yBall;
 
     private int score = 0;
 
@@ -40,7 +41,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     int LEFT = insets.left;
     int RIGHT = FRAME_WIDTH - insets.right;
 
-
+    // Ball들을 담을 ArrayList
+    ArrayList balls = new ArrayList();
 
     GameFrame() {
 
@@ -97,12 +99,18 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         gp.drawImage(imagePlayer, xPlayer, yPlayer, this);
         gp.drawImage(imageCoin, xCoin, yCoin, this);
 
+        gp.setColor(Color.RED);
+        gp.fillOval(xBall, yBall, Ball.SIZE, Ball.SIZE);
+        gp.setColor(Color.BLACK); //컬러를 어떻게 초기화하는 방법을 몰라서 다시 검정색으로 칠함
+
         gp.drawString(("repaint() 카운트: " + Integer.toString(count)), 50, 50);
         gp.drawString(("SCORE: " + Integer.toString(score)), 300, 50);
 
 
         update(g);
     }
+
+
 
     private void movePlayer() {
         if (isKeyUp) {
@@ -136,7 +144,6 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             yCoin = rd.nextInt(FRAME_HEIGHT);
         }
     }
-
 
 
     private void checkPlayerNCoinBumped() {
