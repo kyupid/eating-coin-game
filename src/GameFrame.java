@@ -33,12 +33,19 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     Random rd = new Random();
 
+    //벽에 부딪치는 것을 구현하기위해
+    Insets insets = getInsets();
+    int TOP = insets.top;
+    int BOTTOM = FRAME_HEIGHT - insets.bottom;
+    int LEFT = insets.left;
+    int RIGHT = FRAME_WIDTH - insets.right;
+
+
 
     GameFrame() {
 
         init();
         addKeyListener(this);
-
 
 
         t = new Thread(this);
@@ -52,7 +59,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         while (true) {
             try {
                 movePlayer(); // isKey가 true인지 계속 확인
-                crashPlayerNCoin();
+                checkPlayerNWallBumped();
+                checkPlayerNCoinBumped();
                 repaint(); //계속 다시그려준다
                 count++;
 
@@ -69,29 +77,14 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
 
-
-
         //xPlayer, yPlayer를 프레임의 가운데에 배치하는 값을 저장한다.
         xPlayer = (FRAME_WIDTH - widthPlayer) / 2;
         yPlayer = (FRAME_HEIGHT - heightPlayer) / 2;
 
         genCoin();
 
-}
-
-    private void genCoin () {
-        //xCoin, yCoin 설정
-        xCoin = rd.nextInt(FRAME_WIDTH);
-        yCoin = rd.nextInt(FRAME_HEIGHT);
-
-        //화면을 넘기지 않도록 코인을 생성한다.
-        while(xCoin > FRAME_WIDTH - widthCoin) {
-            xCoin = rd.nextInt(FRAME_WIDTH);
-        }
-        while (yCoin < 30 || yCoin > FRAME_HEIGHT - heightCoin) {
-            yCoin = rd.nextInt(FRAME_HEIGHT);
-        }
     }
+
 
     public void update(Graphics g) {
         g.drawImage(bufferImage, 0, 0, this);
@@ -129,13 +122,49 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         }
     }
 
-    public void crashPlayerNCoin() {
+
+    private void genCoin() {
+        //xCoin, yCoin 설정
+        xCoin = rd.nextInt(FRAME_WIDTH);
+        yCoin = rd.nextInt(FRAME_HEIGHT);
+
+        //화면을 넘기지 않도록 코인을 생성한다.
+        while (xCoin > FRAME_WIDTH - widthCoin) {
+            xCoin = rd.nextInt(FRAME_WIDTH);
+        }
+        while (yCoin < 30 || yCoin > FRAME_HEIGHT - heightCoin) {
+            yCoin = rd.nextInt(FRAME_HEIGHT);
+        }
+    }
+
+
+
+    private void checkPlayerNCoinBumped() {
 
         if (xPlayer + widthPlayer > xCoin && yPlayer + heightPlayer > yCoin && xCoin + widthCoin > xPlayer && yCoin + heightCoin > yPlayer) {
 
             score++;
 
             genCoin();
+        }
+    }
+
+    private void checkPlayerNWallBumped() {
+
+        if (yPlayer <= TOP) {
+            yPlayer = TOP;
+        }
+
+        if (yPlayer >= BOTTOM - heightPlayer) {
+            yPlayer = BOTTOM - heightPlayer;
+        }
+
+        if (xPlayer <= LEFT) {
+            xPlayer = LEFT;
+        }
+
+        if (xPlayer >= RIGHT - widthPlayer) {
+            xPlayer = RIGHT - widthPlayer;
         }
     }
 
