@@ -61,6 +61,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         new BallGenerator().start();
         while (true) {
             try {
+                takeBallsOutFromArray();
                 movePlayer(); // isKey가 true인지 계속 확인
                 checkPlayerNWallBumped();
                 checkPlayerNCoinBumped();
@@ -129,6 +130,34 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         }
     }
 
+    private void takeBallsOutFromArray() {
+        int size = balls.size();
+        for (int i = 0; i < size; i++) { //생성된 ball들을 for문에 넣고 조건을 줘서 움직여준다
+            Ball b = (Ball) balls.get(i); // ball들의 x와 y의 값을 가져오는거긴한데 이 코드는 이해를 못하겠음
+            b.x += b.xStep;
+            b.y += b.yStep;
+
+            if (b.y <= TOP) {
+                b.y = TOP;
+                b.yStep = -b.yStep; //속도를 -로 바꿈
+            }
+
+            if (b.y >= BOTTOM - b.SIZE) {
+                b.y = BOTTOM - b.SIZE;
+                b.yStep = -b.yStep;
+            }
+
+            if (b.x <= LEFT) {
+                b.x = LEFT;
+                b.xStep = -b.xStep;
+            }
+
+            if (b.x >= RIGHT - b.SIZE) {
+                b.x = RIGHT - b.SIZE;
+                b.xStep = -b.xStep;
+            }
+        }
+    }
 
 
     private void movePlayer() {
