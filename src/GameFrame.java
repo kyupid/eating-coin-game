@@ -58,6 +58,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
     }
 
     public void run() {
+        new BallGenerator().start();
         while (true) {
             try {
                 movePlayer(); // isKey가 true인지 계속 확인
@@ -108,6 +109,24 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
 
         update(g);
+    }
+
+    class BallGenerator extends Thread { //공 생성해주는 쓰레드를 만들어준다 무한반복할거니까
+        public void run() {
+            int x, y;
+            while (true) {
+                x = (int) (Math.random() * (RIGHT - Ball.SIZE));
+                y = (int) (Math.random() * (BOTTOM - Ball.SIZE));
+
+                balls.add(new Ball(x, y));
+
+                try {
+                    Thread.sleep(3 * 1000);
+                } catch (Exception e) {
+
+                }
+            }
+        }
     }
 
 
