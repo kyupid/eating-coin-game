@@ -39,10 +39,13 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         init();
         addKeyListener(this);
 
+
+
         t = new Thread(this);
         t.start();
 
         setVisible(true);
+
     }
 
     public void run() {
@@ -67,20 +70,28 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
 
 
+
         //xPlayer, yPlayer를 프레임의 가운데에 배치하는 값을 저장한다.
         xPlayer = (FRAME_WIDTH - widthPlayer) / 2;
         yPlayer = (FRAME_HEIGHT - heightPlayer) / 2;
 
+        genCoin();
+
+}
+
+    private void genCoin () {
         //xCoin, yCoin 설정
         xCoin = rd.nextInt(FRAME_WIDTH);
         yCoin = rd.nextInt(FRAME_HEIGHT);
-        while (yCoin < 30) { //창의 좌표까지 고려해서
+
+        //화면을 넘기지 않도록 코인을 생성한다.
+        while(xCoin > FRAME_WIDTH - widthCoin) {
+            xCoin = rd.nextInt(FRAME_WIDTH);
+        }
+        while (yCoin < 30 || yCoin > FRAME_HEIGHT - heightCoin) {
             yCoin = rd.nextInt(FRAME_HEIGHT);
-
-
         }
     }
-
 
     public void update(Graphics g) {
         g.drawImage(bufferImage, 0, 0, this);
@@ -124,12 +135,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
             score++;
 
-            //xCoin, yCoin 설정
-            xCoin = rd.nextInt(FRAME_WIDTH);
-            yCoin = rd.nextInt(FRAME_HEIGHT);
-            while (yCoin < 30) { //창의 좌표까지 고려해서
-                yCoin = rd.nextInt(FRAME_HEIGHT);
-            }
+            genCoin();
         }
     }
 
