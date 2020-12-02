@@ -109,6 +109,14 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         gp.drawString(("SCORE: " + Integer.toString(score)), 300, 50);
 
 
+        gp.setColor(Color.RED);
+        int size = balls.size();
+        for (int i = 0; i < size; i++) {
+            Ball b = (Ball) balls.get(i); // (Ball) 부분을 모르겠다
+            gp.fillOval(b.x, b.y, b.SIZE, b.SIZE); // ballgenerator에서 값을 3초마다하나씩 넣어서 생성한다
+        }
+
+
         update(g);
     }
 
