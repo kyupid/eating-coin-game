@@ -67,6 +67,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             movePlayer(); // isKey가 true인지 계속 확인
             checkPlayerNWallBumped();
             checkPlayerNCoinBumped();
+            checkPlayerNBallBumped();
             repaint(); //계속 다시그려준다
             count++;
         }
@@ -111,7 +112,6 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
         update(g);
     }
-
 
 
     class BallGenerator extends Thread { //공 생성해주는 쓰레드를 만들어준다 무한반복할거니까
@@ -223,6 +223,35 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
         if (xPlayer >= RIGHT - widthPlayer) {
             xPlayer = RIGHT - widthPlayer;
+        }
+    }
+
+    private void checkPlayerNBallBumped() {
+        int size = balls.size();
+
+        //공의크기는 항상 같으니까 현재좌표에서 원의중심좌표까지의 길이도 절대값으로 같다
+        final int LENGTH_NOW_TO_CENTER_POW = (int) (Math.pow(Ball.SIZE / 2, 2)) + (int) (Math.pow(Ball.SIZE / 2, 2));
+        for (int i = 0; i < size; i++) { //생성된 ball들을 for문에 넣고 조건을 줘서 움직여준다
+            Ball b = (Ball) balls.get(i); // ball들의 x와 y의 값을 가져오는거긴한데 이 코드는 이해를 못하겠음
+
+            // LENGTH_NOW_TO_CENTER_POW에 가장 가까운 같은 숫자의 제곱을 lengthNowToCenTer로 선언
+            int lengthNowToCenTer = 0;
+            for (int j = 1; (int) (Math.pow(j, 2)) <= LENGTH_NOW_TO_CENTER_POW; j++) {
+                lengthNowToCenTer++;
+            }
+            int xCircleCenter = b.x + lengthNowToCenTer;
+            int yCircleCenter = b.y + lengthNowToCenTer;
+
+            if (yPlayer >= yCircleCenter - b.SIZE/2 && yPlayer <= yCircleCenter + b.SIZE && xPlayer >= xCircleCenter - b.SIZE && xPlayer <= xCircleCenter + b.SIZE) {
+                System.exit(0);
+            }
+
+            //1. 방법1 Oval의 길이의 좌표를 구해야함
+            //2. 방법2 사각형의 넓이에서 원의 넓이를뺀 곳은 닿아도 괜찮지만 원에 닿으면 안된다
+            //3. ( (b.SIZE/2)제곱 + (b.SIZE/2)제곱 = (찾고자하는 길이)제곱) 참고자하는 길이를 변수에 넣어준다
+            //3. 원의중심좌표: b.x + 찾고자하는 길이, b.y + 찾고자하는 길이 = 원의 중심 x, y
+            //4. 원의중심에서 x좌표 y좌표 어느것이든 b.SIZE/2를 빼거나 더한 값까지는 (총4가지경우의수) 닿으면 안된다.
+            //5. 닿으면 안되는 곳을 플레이어와 겹치면 일단 시스템 종료하는걸로.
         }
     }
 
