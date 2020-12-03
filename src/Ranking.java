@@ -20,7 +20,7 @@ public class Ranking extends JFrame implements ActionListener {
 
 
     private JButton bt_AnotherGame;
-    private JLabel rank, name, score, scoreR;
+    private JLabel labelRank, labelName, labelScore, labelScoreR;
 
     private ArrayList ls = new ArrayList();
 
@@ -48,21 +48,21 @@ public class Ranking extends JFrame implements ActionListener {
     }
 
     private void printRankingTitle() {
-        rank = new JLabel("순위");
-        rank.setBounds(X_RANK, Y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(rank);
+        labelRank = new JLabel("순위");
+        labelRank.setBounds(X_RANK, Y, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelRank);
 
-        name = new JLabel("이름");
-        name.setBounds(X_NAME, Y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(name);
+        labelName = new JLabel("이름");
+        labelName.setBounds(X_NAME, Y, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelName);
 
-        score = new JLabel("점수");
-        score.setBounds(X_SCORE, Y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(score);
+        labelScore = new JLabel("점수");
+        labelScore.setBounds(X_SCORE, Y, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelScore);
 
-        scoreR = new JLabel("Repaint()");
-        scoreR.setBounds(X_SCORE_R, Y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(scoreR);
+        labelScoreR = new JLabel("Repaint()");
+        labelScoreR.setBounds(X_SCORE_R, Y, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelScoreR);
 
     }
 
@@ -81,30 +81,33 @@ public class Ranking extends JFrame implements ActionListener {
         genName(0, 1);
         genName(3, 2);
         genName(6, 3);
-        genScore(1, 1);
-        genScore(4, 2);
         genScore(7, 3);
-        genScoreR(2, 1);
-        genScoreR(5, 2);
         genScoreR(8, 3);
     }
 
-    private void genName(int index, int y) {
-        name = new JLabel((String) ls.get(index));
-        name.setBounds(X_NAME, Y + 25 * y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(name);
+    private void test2(int x, int rank) { // x는 스코어가 높은 점수대로 넣어줘야함
+        // y는 x가 몇개들어가는지에따라서 1~n까지 for문으로 넣어줌 -> test2메소드출력갯수만큼 똑같겠다
+        genName(3 * x - 3, rank);
+        genScore(3 * x - 2, rank);
+        genScoreR(3 * x - 1, rank);
     }
 
-    private void genScore(int index, int y) {
-        score = new JLabel((String) ls.get(index));
-        score.setBounds(X_SCORE, Y + 25 * y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(score);
+    private void genName(int index, int rank) {
+        labelName = new JLabel((String) ls.get(index));
+        labelName.setBounds(X_NAME, Y + 25 * rank, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelName);
     }
 
-    private void genScoreR(int index, int y) {
-        scoreR = new JLabel((String) ls.get(index));
-        scoreR.setBounds(X_SCORE_R, Y + 25 * y, WIDTH_LABEL, HEIGHT_LABEL);
-        add(scoreR);
+    private void genScore(int index, int rank) {
+        labelScore = new JLabel((String) ls.get(index));
+        labelScore.setBounds(X_SCORE, Y + 25 * rank, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelScore);
+    }
+
+    private void genScoreR(int index, int rank) {
+        labelScoreR = new JLabel((String) ls.get(index));
+        labelScoreR.setBounds(X_SCORE_R, Y + 25 * rank, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelScoreR);
     }
 
     private void reset() {
