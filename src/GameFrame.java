@@ -15,10 +15,9 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private int xPlayer, yPlayer, xCoin, yCoin;
 
-    // 게임끝나고 GameOverFrame에서 활용하기위해서 static으로
-    static private int score = 0;
-    static private int count = 0;
 
+    private int score = 0;
+    private int count = 0;
 
     Image imagePlayer = new ImageIcon("0.png").getImage();
     Image imageCoin = new ImageIcon("1.png").getImage();
@@ -249,6 +248,8 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
             //TODO: 어떻게 고치지? 사각형의 플레이어를 판정하는게 아니라 플레이어가 그려지는 좌표로 판정함
             if (yPlayer >= yCircleCenter - b.SIZE / 2 && yPlayer <= yCircleCenter + b.SIZE && xPlayer >= xCircleCenter - b.SIZE && xPlayer <= xCircleCenter + b.SIZE) {
+                GameOverFrame.SCORE = score;
+                GameOverFrame.SCORE_REPAINT = count;
                 isRunning = false;
                 this.setVisible(false);
                 this.dispose(); //해당프레임만종료
