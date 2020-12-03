@@ -53,6 +53,7 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         t = new Thread(this);
         t.start();
 
+
         setVisible(true);
 
     }
@@ -76,7 +77,9 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
 
     private void init() {
         setTitle("Eat Coin");
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        setUndecorated(true);
+        setResizable(false);
+        setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
 
 
         //xPlayer, yPlayer를 프레임의 가운데에 배치하는 값을 저장한다.
@@ -243,8 +246,10 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
             int xCircleCenter = b.x + lengthNowToCenTer;
             int yCircleCenter = b.y + lengthNowToCenTer;
 
+            //TODO: 어떻게 고치지? 사각형의 플레이어를 판정하는게 아니라 플레이어가 그려지는 좌표로 판정함
             if (yPlayer >= yCircleCenter - b.SIZE / 2 && yPlayer <= yCircleCenter + b.SIZE && xPlayer >= xCircleCenter - b.SIZE && xPlayer <= xCircleCenter + b.SIZE) {
-               isRunning = false;
+                isRunning = false;
+                reset();
             }
 
             //1. 방법1 Oval의 길이의 좌표를 구해야함
@@ -256,6 +261,12 @@ class GameFrame extends JFrame implements KeyListener, Runnable {
         }
     }
 
+    private void reset() {
+        this.setVisible(false);
+        this.dispose();
+        new GameFrame();
+
+    }
 
 
     @Override
