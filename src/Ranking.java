@@ -20,7 +20,7 @@ public class Ranking extends JFrame implements ActionListener {
     private final int HEIGHT_LABEL = 50;
 
 
-    private JButton bt_AnotherGame;
+    private JButton bt_AnotherGame, bt_Quit;
     private JLabel labelRank, labelName, labelScore, labelScoreR;
 
     private ArrayList ls = new ArrayList();
@@ -32,16 +32,21 @@ public class Ranking extends JFrame implements ActionListener {
         setLayout(null);
         setBounds(100, 100, GameFrame.FRAME_WIDTH, GameFrame.FRAME_HEIGHT);
 
-        bt_AnotherGame = new JButton("한판더?");
+        bt_AnotherGame = new JButton("한판더!!");
         bt_AnotherGame.setFont(new Font(null, 0, 20));
-        bt_AnotherGame.setBounds(250, 350, 100, 100);
+        bt_AnotherGame.setBounds(0, 500, 100, 100);
         bt_AnotherGame.addActionListener(this);
+
+        bt_Quit = new JButton("게임종료");
+        bt_Quit.setFont(new Font(null, 0, 20));
+        bt_Quit.setBounds(500, 500, 100, 100);
+        bt_Quit.addActionListener(this);
 
         printRanking();
         add(bt_AnotherGame);
+        add(bt_Quit);
         setVisible(true);
     }
-
 
     private void printRanking() {
         printRankingTitle();
@@ -100,12 +105,22 @@ public class Ranking extends JFrame implements ActionListener {
 
     }
 
+
+
     private void callAllGen(int x, int rank) { // x는 스코어가 높은 점수대로 넣어줘야함
         // y는 x가 몇개들어가는지에따라서 1~n까지 for문으로 넣어줌 -> callAllGen메소드출력갯수만큼 똑같겠다
         genName(x - 1, rank);
         genScore(x, rank);
         genScoreR(x + 1, rank);
+        genRank(Integer.toString(rank), rank);
     }
+
+    private void genRank(String number, int rank) {
+        labelRank = new JLabel(number);
+        labelRank.setBounds(X_RANK, Y + 25 * rank, WIDTH_LABEL, HEIGHT_LABEL);
+        add(labelRank);
+    }
+
 
     private void genName(int index, int rank) {
         labelName = new JLabel((String) ls.get(index));
