@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Ranking extends JFrame implements ActionListener {
@@ -78,18 +79,32 @@ public class Ranking extends JFrame implements ActionListener {
         } catch (IOException e) {
         }
 
-        genName(0, 1);
-        genName(3, 2);
-        genName(6, 3);
-        genScore(7, 3);
-        genScoreR(8, 3);
+
+        ArrayList<Integer> lsScore = new ArrayList<Integer>();
+        for (int i = 1; i <= ls.size() / 3; i++) {
+            lsScore.add(Integer.valueOf((String) ls.get(3 * i - 2)));
+        }
+        Collections.sort(lsScore); //정렬
+
+        ArrayList<String> lsScore2 = new ArrayList<String>();
+        for (int i = 0; i < lsScore.size(); i++) { //int타입인 isScore를 다시 String으로
+            lsScore2.add(String.valueOf(lsScore.get(i)));
+        }
+
+        int rank = 0;
+        for (int i = lsScore2.size(); i >= 1; i--) { //
+            int x = ls.indexOf(lsScore2.get(i - 1)); //ls의 인덱스값 1, 4,7..찾기
+            rank++;
+            callAllGen(x, rank);
+        }
+
     }
 
-    private void test2(int x, int rank) { // x는 스코어가 높은 점수대로 넣어줘야함
-        // y는 x가 몇개들어가는지에따라서 1~n까지 for문으로 넣어줌 -> test2메소드출력갯수만큼 똑같겠다
-        genName(3 * x - 3, rank);
-        genScore(3 * x - 2, rank);
-        genScoreR(3 * x - 1, rank);
+    private void callAllGen(int x, int rank) { // x는 스코어가 높은 점수대로 넣어줘야함
+        // y는 x가 몇개들어가는지에따라서 1~n까지 for문으로 넣어줌 -> callAllGen메소드출력갯수만큼 똑같겠다
+        genName(x - 1, rank);
+        genScore(x, rank);
+        genScoreR(x + 1, rank);
     }
 
     private void genName(int index, int rank) {
