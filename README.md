@@ -1,3 +1,5 @@
+
+![](https://images.velog.io/images/kyukim/post/97c8be55-5488-4ee2-bcb1-77bb44a65817/2020-12-05_10-03-01.jpg)
 # 코인 먹기 게임
 ## 게임 목표
 1. 상, 하, 좌, 우, 대각선으로 움직이는 플레이어
