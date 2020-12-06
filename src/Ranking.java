@@ -40,7 +40,12 @@ public class Ranking extends JFrame implements ActionListener {
         bt_Quit = new JButton("게임종료");
         bt_Quit.setFont(new Font(null, 0, 20));
         bt_Quit.setBounds(500, 500, 100, 100);
-        bt_Quit.addActionListener(this);
+        bt_Quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         printRanking();
         add(bt_AnotherGame);
