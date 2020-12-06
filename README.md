@@ -1,9 +1,13 @@
+
+![](https://media.vlpt.us/images/kyukim/post/3497e68e-c39c-4efe-9457-ecfcf7466df7/Dec-07-2020%2008-13-52.gif)
 # 코인 먹기 게임
 ## 게임 목표
-1. 상, 하, 좌, 우, 대각선으로 움직이는 플레이어
-2. 맵에서 랜덤으로 코인을 생성
-3. 코인을 먹으면 점수가 올라감
-4. 일정 점수가 되면 게임이 끝남
+0. 코인을 먹으면서 점수가 올라간다.
+1. 장애물에 부딪치면 게임이 끝난다.
+2. 장애물은 여러개이고 랜덤의 속도로 생성된다
+3. 장애물은 움직이고 벽에 닿으면 튕겨나간다.
+4. 장애물에 부딪치면 이름을 입력할 수 있는 텍스트필드가 나온다.
+5. 스코어에 따라 랭킹이 정렬된다
 
 ## 개인 목표
 1. 필요할 것 같은 개념이나 클래스 사용법 위주로 공부한다.
@@ -15,10 +19,12 @@
 
 # Eat Coin game
 ## Game goals
-1. Players moving up, down, left, right, diagonally
-2. Generate coins randomly on the map
-3. Eating coins increases your score
-4. Game ends when a certain score is reached
+0. As you eat coins, your score increases.
+1. If you hit an obstacle, the game is over.
+2. There are several obstacles and they are generated at random speed.
+3. Obstacles move and bounce when they hit a wall.
+4. When you hit an obstacle, a text field appears where you can enter your name.
+5. Ranking is sorted according to score
 
 ## Personal goals
 1. Study mainly on concepts that seem necessary or how to use classes.
